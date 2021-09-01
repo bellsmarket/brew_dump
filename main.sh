@@ -12,7 +12,6 @@
 
 ####################################################
 
-
 # function main {{{
 function main() {
   if [ $(/usr/bin/uname -m) = "x86_64" ]; then
@@ -27,4 +26,5 @@ function main() {
   return 0
 }
 # }}}
+
 main "$@"
