@@ -1,7 +1,7 @@
 #!/bin/bash
 ####################################################
 # Script name : brew_dump.sh
-# Discription :
+# Discription : The BrewDumpfile will be backed up automatically.
 # How to : # brew_dump.sh
 #     \$1 : -
 #     \$2 : -
@@ -19,20 +19,25 @@ function pushBrewFile() {
   git push
 }
 
+function downloadBrewDumpFile() {
+  if [ -f "$HOME/dotfiles/homebrew/$file" ];then
+    rm -v "$HOME/dotfiles/homebrew/$file"
+    echo "File Exists. So File is exchange."
+  fi
+  $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/$file"
+}
 
 # function main {{{
 function main() {
   if [ $(/usr/bin/uname -m) = "x86_64" ]; then
     # Pro
     file="Brewfile-pro"
-    rm "$HOME/dotfiles/homebrew/$file"
-    $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/$file"
+    downloadBrewDumpFile
     pushBrewFile
   else
     # Air
     file="Brewfile-air"
-    rm "$HOME/dotfiles/homebrew/$file"
-    $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/$file" 
+    downloadBrewDumpFile
     pushBrewFile
   fi
   return 0
@@ -40,5 +45,5 @@ function main() {
 # }}}
 
 
-pushBrewFile
-# main "$@"
+# pushBrewFile
+main "$@"
