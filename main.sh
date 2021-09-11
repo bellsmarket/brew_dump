@@ -1,8 +1,8 @@
 #!/bin/bash
 ####################################################
-# Script name : ---.sh
+# Script name : brew_dump.sh
 # Discription :
-# How to : # ---.sh
+# How to : # brew_dump.sh
 #     \$1 : -
 #     \$2 : -
 #     Example: # ---.sh
@@ -12,19 +12,33 @@
 
 ####################################################
 
+function pushBrewFile() {
+  cd "$HOME/dotfiles/homebrew"
+  git add "$file"
+  git commit -m "update $file"
+  git push
+}
+
+
 # function main {{{
 function main() {
   if [ $(/usr/bin/uname -m) = "x86_64" ]; then
     # Pro
-    rm "$HOME/dotfiles/homebrew/Brewfile-pro"
-    $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/Brewfile-pro"
+    file="Brewfile-pro"
+    rm "$HOME/dotfiles/homebrew/$file"
+    $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/$file"
+    pushBrewFile
   else
     # Air
-    rm "$HOME/dotfiles/homebrew/Brewfile-air"
-    $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/Brewfile-air" 
+    file="Brewfile-air"
+    rm "$HOME/dotfiles/homebrew/$file"
+    $(which brew) bundle dump --file "$HOME/dotfiles/homebrew/$file" 
+    pushBrewFile
   fi
   return 0
 }
 # }}}
 
-main "$@"
+
+pushBrewFile
+# main "$@"
