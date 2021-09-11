@@ -14,6 +14,7 @@
 
 function pushBrewFile() {
   cd "$HOME/dotfiles/homebrew"
+  git pull
   git add "$file"
   git commit -m "update $file"
   git push
